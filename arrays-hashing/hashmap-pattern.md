@@ -109,6 +109,27 @@ class Solution:
 
 >**The insight:** check *as you insert*, not after. You don't need to finish building the map — return the moment you find the answer.
 ---
+### Top K Frequent Elements
+**Problem:** given an integer array `nums` and integer `k`, return the `k` most frequent elements
+
+**Key flip:** instead of scanning for frequent elements, ask *"if I sort by frequency, don't the top k just fall out?"*
+
+```python
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # INSIGHT: for each element, find the frequency, sort the hashmap using the frequency and get the top k elements
+        # WHY IT WORKS: sorting by frequency keeps key-value pairs together — sorting values alone loses the element association
+        # COMPLEXITY: time O(n log n) because of the sort / space O(n) because map + sorted array both grow with input
+        # BREAKS WHEN: n is large and k is small — sorting all n items is wasteful. Heap gives O(n log k) — only tracks k items at a time.
+        topkDict = defaultdict(int)
+        for i in nums:
+            topkDict[i] += 1
+        topkArray = sorted(topkDict.items(), key=lambda item: item[1], reverse=True)[:k]
+        return [item[0] for item in topkArray]
+```
+
+>**The insight:** `dict.items()` keeps key-value pairs together as tuples — sort by `item[1]` (frequency), slice `[:k]`, extract `item[0]` (the element). Heap is the optimal alternative at scale.
+---
 ## Variants of the pattern
 
 | Variant | What you store | What you look up |
