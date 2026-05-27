@@ -130,6 +130,34 @@ class Solution:
 
 >**The insight:** `dict.items()` keeps key-value pairs together as tuples — sort by `item[1]` (frequency), slice `[:k]`, extract `item[0]` (the element). Heap is the optimal alternative at scale.
 ---
+---
+ 
+### Valid Anagram
+**Problem:** given two strings `s` and `t`, return true if `t` is an anagram of `s`
+ 
+**Key flip:** instead of comparing characters directly, ask *"do both strings have identical character frequencies?"*
+ 
+```python
+from collections import defaultdict
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        # INSIGHT: build a frequency map — +1 for every char in s, -1 for every char in t
+        # WHY IT WORKS: anagrams have identical char counts — if they cancel to zero, it's an anagram
+        # COMPLEXITY: time O(n) because 3 independent passes / space O(k) where k is alphabet size — O(26) for lowercase, effectively O(1)
+        # BREAKS WHEN: would break if you only counted one string — missing chars in the longer string wouldn't be caught
+        hashmap = defaultdict(int)
+        for i in s:
+            hashmap[i] += 1
+        for j in t:
+            hashmap[j] -= 1
+        if all(v == 0 for v in hashmap.values()):
+            return True
+        return False
+```
+ 
+> **The insight:** +1 and -1 into the same map. If they're anagrams, every key cancels to zero. One map, two passes, no comparison needed.
+ 
+---
 ## Variants of the pattern
 
 | Variant | What you store | What you look up |
@@ -172,10 +200,10 @@ class Solution:
 
 ## Problems to add here
 
-- [ ] Two Sum ✅
-- [ ] Valid Anagram ✅
-- [ ] Contains Duplicate ✅
-- [ ] Group Anagrams
+- [X] Two Sum ✅
+- [X] Valid Anagram ✅
+- [X] Contains Duplicate ✅
+- [X] Group Anagrams ✅
 - [ ] Top K Frequent Elements ✅
 - [ ] Product of Array Except Self
 - [ ] Valid Sudoku
