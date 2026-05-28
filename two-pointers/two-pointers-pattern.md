@@ -91,7 +91,32 @@ class Solution:
 ```
 
 > **The insight:** sorted order is the key. Hash map Two Sum works on unsorted arrays — two pointers Two Sum works on sorted arrays and uses O(1) space instead of O(n).
+---
+### Container With Most Water
+**Problem:** find two lines that together with the x-axis forms a container that holds the most water
 
+**Key flip:** instead of checking every pair, ask *"which pointer is limiting the water level — move that one"*
+
+```python
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        # INSIGHT: two pointers from both ends, track max area at each step
+        # WHY IT WORKS: shorter wall is always the bottleneck — moving it inward is the only chance to find bigger area
+        # COMPLEXITY: time O(n) one pass / space O(1) only max_area tracked
+        # BREAKS WHEN: nothing — single element returns 0 correctly, equal heights handled by <= case
+        i = 0
+        j = len(height) - 1
+        max_area = 0
+        while i < j:
+            max_area = max(min(height[i], height[j]) * (j - i), max_area)
+            if height[i] <= height[j]:
+                i += 1
+            else:
+                j -= 1
+        return max_area
+```
+
+> **The insight:** width shrinks every step — so your only lever is height. Always move the shorter wall inward. Keeping it gains nothing; replacing it might gain everything.
 ---
 
 ## Two pointers vs hash map — when to use which
