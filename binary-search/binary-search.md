@@ -155,7 +155,7 @@ This is the entire difference between exact match and boundary search templates.
 
 ## Problems to solve — Week 3
 
-- [ ] Binary Search (LC 704) — exact match template
+- [x] Binary Search (LC 704) — exact match template ✅ solved 7 min, accepted
 - [ ] Find Minimum in Rotated Sorted Array (LC 153) — modified binary search
 - [ ] Search in Rotated Sorted Array (LC 33) — harder variant
 - [ ] Find First and Last Position (LC 34) — boundary search both sides
